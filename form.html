@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chennai Service Provider Data Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        const areaData = {
+            "Egmore": [
+                "Anna Road GPO - 600002",
+                "Broadway - 600108",
+                "Chennai GPO - 600001",
+                "Chetpet HO - 600031",
+                "Choolai - 600 112",
+                "Egmore - 600 008",
+                "Ennore Thermal - 600 057",
+                "Flowers Road - 600 084",
+                "Fort St George - 600 009",
+                "Kilpauk - 600 010",
+                "Park Town - 600 003",
+                "Royapuram - 600 013",
+                "Sowcarpet - 600 079",
+                "Vepery - 600 007",
+                // Add the rest here...
+            ],
+            "Mylapore": [
+                "Nungambakkam - 600034",
+                "Gopalapuram - 600086",
+                "Greams Road - 600006",
+                "Mylapore - 600 004",
+                "Nandanam - 600 035",
+                "Raja Annamalaipuram - 600 028",
+                "Royapettah - 600 014",
+                "Saidapet - 600 015",
+                "Teynampet - 600 018",
+                "Triplicane - 600 005",
+                "Kodambakkam - 600 024",
+                "T.Nagar - 600 017",
+                "West Mambalam - 600 033",
+                // Add the rest here...
+            ],
+            "Porur": [
+                "Alwarthirunagar - 600087",
+                "Ashok Nagar - 600083",
+                "Jaffarkhanpet - 600095",
+                "Kelambakkam / Padur - 603 103",
+                "KK Nagar - 600 078",
+                "Mamandur / Manapakkam - 602 111",
+                "Mangadu - 600 122",
+                "Mugalivakkam/Manapakkam - 600 125",
+                "Nandambakkam - 600 089",
+                "Porur - 600 116",
+                "Saligramam - 600 093",
+                "Virugambakkam - 600 092",
+                // Add the rest here...
+            ],
+            "Nanganallur": [
+                "Adambakkam - 600088",
+                "Ekkaduthangal - 600097",
+                "Industrial Estate Guindy - 600032",
+                "Keelakattalai - 600117",
+                "Madipakkam - 600091",
+                "Meenambakkam - 600027",
+                "Nanganallur - 600061",
+                "Officers' Training School - 600037",
+                "Pazhavanthangal - 600114",
+                "Raj Bhavan - 600022",
+                "St.Thomas Mount - 600016",
+                // Add the rest here...
+            ],
+            "Perumbur": [
+                "Ambattur - 600053",
+                "Ayanavaram - 600023",
+                "Jawahar Nagar/Agaram - 600082",
+                "Kodungaiyur - 600118",
+                "Kolathur/CPT - 600099",
+                "Korattur - 600080",
+                "Korattur RS - 600076",
+                "Madhavaram - 600060",
+                "Madhavaram Milk Colony - 600051",
+                "Perambur - 600011",
+                "Perambur Barracks - 600012",
+                "Ponniammanmedu - 600110",
+                "Villivakkam - 600049"
+                // Add the rest here...
+            ],
+            "Tiruvottiyur": [
+                "Kaverapetai - 601 206",
+                "Manali - 600 068",
+                "Manali New Town - 600 103",
+                "Minjur - 601 203",
+                "Nandiambakkam - 600 120",
+                "Tiruvottiyur - 600 019",
+                "Tondiarpet - 600 081",
+                "Vyasarpadi - 600 039",
+                "Washermenpet - 600 021"
+            // Add all other subzones and areas similarly...
+            ],
+            "Sholinganallur": [
+                "Gowrivakkam - 601302",
+                "Hanumanthapuram / Sembakkam - 602108",
+                "Kovilambakkam - 600129",
+                "Medavakkam - 600100",
+                "Melakkottaiyur - 600127",
+                "Navalur - 600130",
+                "Palavakkam - 600041",
+                "Perungudi - 600096",
+                "Sholinganallur - 600119",
+                "Sithalapakkam - 600126",
+                "Tharamani - 600113",
+                "Velacheri - 600042"
+            ],
+            "Adyar": [
+                "Guindy Engineering College - 600025",
+                "Indian Institute of Technology - 600036",
+                "Adyar - 600020",
+                "Besantnagar - 600090",
+                "Kotturpuram - 600085",
+                "Thiruvanmiyur - 600041"
+            ],
+            "Anna Nagar": [
+                "Aminjikarai - 600029",
+                "Annanagar - 600040",
+                "Annanagar E. Ext. - 600102",
+                "Annananagar W. Ext. - 600101",
+                "Arumbakkam - 600106",
+                "Ayappannagar - 600111",
+                "Choolaimedu - 600094",
+                "ICF Colony - 600038",
+                "Koyambedu - 600107",
+                "Padi - 600050",
+                "Shenoynagar - 600030",
+                "Vadapalani - 600026"
+            ],
+            "Tambaram": [
+                "Anakaputhur - 600070",
+                "Chitlapakkam - 600064",
+                "Chromepet - 600044",
+                "Guduvanchery - 602202",
+                "Kattankolathur - 602203",
+                "Old pallavaram - 601303",
+                "Padappai - 601301",
+                "Pallavaram - 600043",
+                "Pammal - 600075",
+                "Pozhichalur - 600074",
+                "Selaiyur - 600073",
+                "Singaperumalkoil - 602204",
+                "Srinivasanagar - 600063",
+                "Tambaram East - 600059",
+                "Tambaram HO - 600045",
+                "Tambaram IAF - 600046",
+                "Tambaram Sanatorium - 600047",
+                "Urapakkam - 602210",
+                "Vandalur - 600048"
+            ],
+            "Poonnamallee": [
+                "Ambattur HO - 600053",
+                "Ambattur Industrial Estate - 600058",
+                "Avadi Camp HO - 600054",
+                "Thiruverkadu - 600077",
+                "Avadi IAF - 600055",
+                "CRP Gmp Avadi - 600065",
+                "Kamarajanagar - 600071",
+                "Kunrathur(Kanchi Dt) - 600069",
+                "Pattabiram - 600072",
+                "Ponnery - 601204",
+                "Poonamallee - 600056",
+                "Pozhal - 600066",
+                "Puduchatram - 600124",
+                "Pulicat - 601205",
+                "Red Hills - 600052",
+                "Satyamurthinagar - 600062",
+                "Sembarambakkam/Nazarethpettai - 600123",
+                "Sholavaram - 600067",
+                "SIDCO Estate - 600098",
+                "Thandalam/Kovur - 600128",
+                "Thirumullaivoyal - 601209",
+                "Thiruninravur - 602024",
+                "Tirukalikundram / Oragadam - 602109"
+            ]
+            };
+
+        function populateAreas() {
+            const subzoneSelect = document.getElementById('sub_zone');
+            const areaSelect = document.getElementById('area');
+            const selectedSubzone = subzoneSelect.value;
+
+            areaSelect.innerHTML = '';
+
+            if (areaData[selectedSubzone]) {
+                areaData[selectedSubzone].forEach(area => {
+                    const option = document.createElement('option');
+                    option.value = area;
+                    option.text = area;
+                    areaSelect.appendChild(option);
+                });
+            }
+        }
+
+        function toggleRemarks() {
+            const fieldVisit = document.getElementById('field_visit_done').value.toUpperCase();
+            document.getElementById('remarksDiv').style.display = (fieldVisit === 'Y') ? 'block' : 'none';
+        }
+        document.getElementById('field_visit_done').addEventListener('input', toggleRemarks);
+        window.onload = function() {
+            populateAreas();
+            toggleRemarks();
+        };
+
+        async function fetchProvider() {
+            const providerId = document.getElementById('provider_id').value;
+            if (!providerId) {
+                alert("Please enter a Provider ID to fetch.");
+                return;
+            }
+            const response = await fetch(`/api/provider/${providerId}`);
+            if (response.ok) {
+                const data = await response.json();
+                if (data.found) {
+                    // Fill form fields
+                    document.getElementById('sub_zone').value = data.sub_zone;
+                    populateAreas();
+                    document.getElementById('area').value = data.area;
+                    document.getElementById('service_type').value = data.service_type;
+                    document.getElementById('provider_name').value = data.provider_name;
+                    document.getElementById('address').value = data.address;
+                    document.getElementById('contact_mobile 1').value = data.contact_mobile_1;
+                    document.getElementById('contact_mobile 2').value = data.contact_mobile_2 || '';
+                    document.getElementById('delivery_available').value = data.delivery_available ? 'Y' : 'N';
+                    document.getElementById('immediate_delivery').value = data.immediate_delivery ? 'Y' : 'N';
+                    document.getElementById('delivery_charges').value = data.delivery_charges || '';
+                    document.getElementById('service_hours').value = data.service_hours || '';
+                    document.getElementById('field_visit_done').value = data.field_visit_done ? 'Y' : 'N';
+                    document.getElementById('field_visit_remarks').value = data.field_visit_remarks || '';
+                    document.getElementById('last_verified_date').value = data.last_verified_date || '';
+                    toggleRemarks();
+                } else {
+                    alert("Provider not found.");
+                }
+            } else {
+                alert("Error fetching provider data.");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Chennai Service Provider Data Collection</h1>
+    <form action="/submit" method="POST">
+
+        <label for="provider_id">Provider ID (Leave blank for new entry):</label>
+        <div style="display: flex; gap: 10px;">
+            <input type="number" id="provider_id" name="provider_id" value="">
+            <button type="button" onclick="fetchProvider()">Fetch</button>
+        </div>
+
+        <label for="sub_zone">SUB ZONE:</label>
+        <select id="sub_zone" name="sub_zone" onchange="populateAreas()" required>
+            <option value="">-- Select Sub Zone --</option>
+            <option value="Egmore" {{ 'selected' if provider_data and provider_data.sub_zone == 'Egmore' else '' }}>Egmore</option>
+            <option value="Mylapore" {{ 'selected' if provider_data and provider_data.sub_zone == 'Mylapore' else '' }}>Mylapore</option>
+            <option value="Porur" {{ 'selected' if provider_data and provider_data.sub_zone == 'Porur' else '' }}>Porur</option>
+            <option value="Nanganallur" {{ 'selected' if provider_data and provider_data.sub_zone == 'Nanganallur' else '' }}>Nanganallur</option>
+            <option value="Perumbur" {{ 'selected' if provider_data and provider_data.sub_zone == 'Perumbur' else '' }}>Perumbur</option>
+            <option value="Tiruvittiyur" {{ 'selected' if provider_data and provider_data.sub_zone == 'Tiruvittiyur' else '' }}>Tiruvittiyur</option>
+            <option value="Sholinganallur" {{ 'selected' if provider_data and provider_data.sub_zone == 'Sholinganallur' else '' }}>Sholinganallur</option>
+            <option value="Adyar" {{ 'selected' if provider_data and provider_data.sub_zone == 'Adyar' else '' }}>Adyar</option>  
+            <option value="Anna Nagar" {{ 'selected' if provider_data and provider_data.sub_zone == 'Anna Nagar' else '' }}>Anna Nagar</option>
+            <option value="Tambaram" {{ 'selected' if provider_data and provider_data.sub_zone == 'Tambaram' else '' }}>Tambaram</option>
+            <option value="Poonnamallee" {{ 'selected' if provider_data and provider_data.sub_zone == 'Poonnamallee' else '' }}>Poonnamallee</option>  
+              <!-- Add more subzones as needed -->
+        </select>
+
+        <label for="area">AREA (auto-populated based on subzone):</label>
+        <select id="area" name="area" required>
+            <option value="">-- Select Area --</option>
+        </select>
+
+        <label for="service_type">Service Type:</label>
+        <select id="service_type" name="service_type" required>
+            <option value="Health">Health</option>
+            <option value="Personal Care">Personal Care</option>
+            <option value="Home Maintenance">Home Maintenance</option>
+            <option value="Appliance Maintenance">Appliance Maintenance</option>
+            <option value="Vehicle Maintenance">Vehicle Maintenance</option>
+            <option value="Others">Others</option>
+        </select>
+
+        <label for="provider_name">Provider Name:</label>
+        <input type="text" id="provider_name" name="provider_name" required value="{{ provider_data.provider_name if provider_data }}">
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea>
+
+        <label for="contact_mobile 1">Contact - Mobile 1(10 digits):</label>
+        <input type="text" id="contact_mobile 1" name="contact_mobile 1" pattern="\d{10}" placeholder="10 digits" required>
+
+        <label for="contact_mobile 2">Contact - Mobile 2(10 digits):</label>
+        <input type="text" id="contact_mobile 2" name="contact_mobile 2" pattern="\d{10}" placeholder="10 digits" value="{{ provider_data.contact_mobile_2 if provider_data }}">
+
+        <label for="delivery_available">Delivery Available (Y/N):</label>
+        <input type="text" id="delivery_available" name="delivery_available" pattern="[YyNn]" placeholder="Y or N" required>
+
+        <label for="immediate_delivery">Immediate Delivery (Y/N):</label>
+        <input type="text" id="immediate_delivery" name="immediate_delivery" pattern="[YyNn]" placeholder="Y or N" required>
+
+        <label for="delivery_charges">Delivery Charges:</label>
+        <input type="text" id="delivery_charges" name="delivery_charges">
+
+        <label for="service_hours">Service Hours:</label>
+        <input type="text" id="service_hours" name="service_hours">
+
+        <label for="field_visit_done">Field Visit Done (Y/N):</label>
+        <input type="text" id="field_visit_done" name="field_visit_done" pattern="[YyNn]" placeholder="Y or N" required onchange="toggleRemarks()">
+
+        <div id="remarksDiv" style="display:none;">
+            <label for="field_visit_remarks">Field Visit Remarks:</label>
+            <textarea id="field_visit_remarks" name="field_visit_remarks">{{ provider_data.field_visit_remarks if provider_data }}</textarea>
+        </div>
+
+        <label for="last_verified_date">Last Verified Date (dd-mm-yyyy):</label>
+        <input type="text" id="last_verified_date" name="last_verified_date" pattern="\d{2}-\d{2}-\d{4}" placeholder="DD-MM-YYYY" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>
