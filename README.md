@@ -47,3 +47,26 @@
 
 6. Access the form at:  
    [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+
+7. render.com 
+   ayurasstparentcare
+   hostname:dpg-d32o73ruibrs73a1edhg-a
+   Database
+service_provider_database
+
+Username
+service_provider_database_user
+
+Password
+6GcC9sy22YQsZxV2tYn8fuF4eDudeSvV
+
+
+Internal Database URL
+postgresql://service_provider_database_user:6GcC9sy22YQsZxV2tYn8fuF4eDudeSvV@dpg-d32o73ruibrs73a1edhg-a/service_provider_database
+
+
+External Database URL
+postgresql://service_provider_database_user:6GcC9sy22YQsZxV2tYn8fuF4eDudeSvV@dpg-d32o73ruibrs73a1edhg-a.oregon-postgres.render.com/service_provider_database
+
+
+
