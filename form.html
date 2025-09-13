@@ -280,6 +280,18 @@
                 alert("Error fetching provider data.");
             }
         }
+
+        function handleSubZoneOther() {
+            const subZoneSelect = document.getElementById('sub_zone');
+            const otherInput = document.getElementById('sub_zone_other');
+            otherInput.style.display = (subZoneSelect.value === 'Others') ? 'block' : 'none';
+        }
+
+        function handleAreaOther() {
+            const areaSelect = document.getElementById('area');
+            const otherInput = document.getElementById('area_other');
+            otherInput.style.display = (areaSelect.value === 'Others') ? 'block' : 'none';
+        }
     </script>
 </head>
 <body>
@@ -294,7 +306,7 @@
         </div>
 
         <label for="sub_zone">SUB ZONE:</label>
-        <select id="sub_zone" name="sub_zone" onchange="populateAreas()" required>
+        <select id="sub_zone" name="sub_zone" onchange="populateAreas(); handleSubZoneOther();" required>
             <option value="">-- Select Sub Zone --</option>
             <option value="Egmore" {{ 'selected' if provider_data and provider_data.sub_zone == 'Egmore' else '' }}>Egmore</option>
             <option value="Mylapore" {{ 'selected' if provider_data and provider_data.sub_zone == 'Mylapore' else '' }}>Mylapore</option>
@@ -307,13 +319,15 @@
             <option value="Anna Nagar" {{ 'selected' if provider_data and provider_data.sub_zone == 'Anna Nagar' else '' }}>Anna Nagar</option>
             <option value="Tambaram" {{ 'selected' if provider_data and provider_data.sub_zone == 'Tambaram' else '' }}>Tambaram</option>
             <option value="Poonnamallee" {{ 'selected' if provider_data and provider_data.sub_zone == 'Poonnamallee' else '' }}>Poonnamallee</option>  
-              <!-- Add more subzones as needed -->
+            <option value="Others">Others</option>
         </select>
+        <input type="text" id="sub_zone_other" name="sub_zone_other" placeholder="Enter other sub zone" style="display:none; margin-top:5px;" />
 
         <label for="area">AREA (auto-populated based on subzone):</label>
-        <select id="area" name="area" required>
+        <select id="area" name="area" onchange="handleAreaOther();" required>
             <option value="">-- Select Area --</option>
         </select>
+        <input type="text" id="area_other" name="area_other" placeholder="Enter other area" style="display:none; margin-top:5px;" />
 
         <label for="service_type">Service Type:</label>
         <select id="service_type" name="service_type" required>

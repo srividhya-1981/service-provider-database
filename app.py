@@ -57,20 +57,27 @@ def submit():
     provider_id = request.form.get('provider_id')
     sub_zone = request.form.get('sub_zone')
     area = request.form.get('area')
+
+    # Use 'other' fields if "Others" is selected
+    if sub_zone == "Others":
+        sub_zone = request.form.get('sub_zone_other')
+    if area == "Others" or sub_zone == "Others":
+        area = request.form.get('area_other')
+
     service_type = request.form.get('service_type')
     provider_name = request.form.get('provider_name')
     address = request.form.get('address')
     contact_mobile_1 = request.form.get('contact_mobile 1')
     contact_mobile_2 = request.form.get('contact_mobile 2')
-    delivery_available = request.form.get('delivery_available').upper() == 'Y'
-    immediate_delivery = request.form.get('immediate_delivery').upper() == 'Y'
+    delivery_available = request.form.get('delivery_available')
+    immediate_delivery = request.form.get('immediate_delivery')
     delivery_charges = request.form.get('delivery_charges')
     service_hours = request.form.get('service_hours')
-    field_visit_done = request.form.get('field_visit_done').upper() == 'Y'
+    field_visit_done = request.form.get('field_visit_done')
     field_visit_remarks = request.form.get('field_visit_remarks')
-    
-    last_verified_date_str = request.form.get('last_verified_date')
-    last_verified_date = datetime.strptime(last_verified_date_str, '%d-%m-%Y').date()
+    last_verified_date = request.form.get('last_verified_date')
+
+    last_verified_date_obj = datetime.strptime(last_verified_date, '%d-%m-%Y').date() if last_verified_date else None
 
     conn = get_connection()
     cur = conn.cursor()
@@ -98,7 +105,7 @@ def submit():
             sub_zone, area, service_type, provider_name, address,
             contact_mobile_1, contact_mobile_2, delivery_available,
             immediate_delivery, delivery_charges, service_hours,
-            field_visit_done, field_visit_remarks, last_verified_date,
+            field_visit_done, field_visit_remarks, last_verified_date_obj,
             datetime.now(), provider_id
         ))
     else:
@@ -114,7 +121,7 @@ def submit():
             sub_zone, area, service_type, provider_name, address,
             contact_mobile_1, contact_mobile_2, delivery_available,
             immediate_delivery, delivery_charges, service_hours,
-            field_visit_done, field_visit_remarks, last_verified_date
+            field_visit_done, field_visit_remarks, last_verified_date_obj
         ))
 
     conn.commit()
